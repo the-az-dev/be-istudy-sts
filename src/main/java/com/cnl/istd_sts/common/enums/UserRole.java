@@ -4,5 +4,9 @@ public enum UserRole {
     TUTOR,
     ADMIN,
     STUDENT,
-    GUEST
+    GUEST;
+
+    public String getAuthority() {
+        return "ROLE_" + this.name();
+    }
 }
