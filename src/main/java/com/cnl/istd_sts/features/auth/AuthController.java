@@ -25,9 +25,4 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authService.signUp(request));
     }
-
-    @GetMapping(value = "/user", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<UserEntity> testFind(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authService.getUserByMail(request.getEmail()));
-    }
 }

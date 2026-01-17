@@ -32,17 +32,6 @@ public class AuthService {
     @Autowired
     private TokenManagmentService tokenManagmentService;
 
-    public UserEntity getUserByMail(String mail) {
-        UserEntity user = usersRepository.findOneByEmail(mail).orElseThrow();
-
-        if (user == null) {
-            throw new CredentialsNotValid();
-        }
-
-        return user;
-    }
-
-
     public AuthResponse signIn(SignInRequest signInRequest) {
         if (!usersRepository.existsByEmail(signInRequest.getEmail())) {
             throw new CredentialsNotValid();

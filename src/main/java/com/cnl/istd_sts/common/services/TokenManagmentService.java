@@ -2,9 +2,7 @@ package com.cnl.istd_sts.common.services;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,9 +12,11 @@ import java.util.stream.Collectors;
 @Service
 public class TokenManagmentService {
     private final JwtEncoder jwtEncoder;
+    private final JwtDecoder jwtDecoder;
 
-    public TokenManagmentService(JwtEncoder jwtEncoder) {
+    public TokenManagmentService(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
         this.jwtEncoder = jwtEncoder;
+        this.jwtDecoder = jwtDecoder;
     }
 
     public String generateToken(Authentication authentication) {
@@ -35,5 +35,19 @@ public class TokenManagmentService {
                 .build();
 
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+
+    public String extractUsername(String token) {
+        return jwtDecoder.decode(token).getSubject();
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            jwtDecoder.decode(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
     }
 }
