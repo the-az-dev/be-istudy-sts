@@ -1,6 +1,7 @@
 package com.cnl.istd_sts.features.users.domain;
 
 import com.cnl.istd_sts.common.managers.AttrEncryptorManager;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,6 +31,7 @@ public class UserPersonalDataEntity {
     @MapsId
     @JoinColumn(name = "user_id")
     @ToString.Exclude
+    @JsonBackReference
     private UserEntity user;
 
     @Column(name = "full_name")

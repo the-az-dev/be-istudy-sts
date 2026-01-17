@@ -37,7 +37,7 @@ public class AdminInitializerManager implements CommandLineRunner {
 
             UserEntity admin = new UserEntity();
             admin.setEmail(adminEmail);
-            admin.setPassword(passwordEncoder.encode(adminPassword)); // Обов'язково хешуємо!
+            admin.setPassword(passwordEncoder.encode(adminPassword));
             admin.setRole(UserRole.ADMIN);
             admin.setPhoneNumber("0000000000");
             admin.setPersonalData(new UserPersonalDataEntity("Main Inherited Admin for Spring Boot", "Server", "XXXXXXX"));

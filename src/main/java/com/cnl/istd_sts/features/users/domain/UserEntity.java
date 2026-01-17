@@ -1,17 +1,21 @@
 package com.cnl.istd_sts.features.users.domain;
 
 import com.cnl.istd_sts.common.enums.UserRole;
+import com.cnl.istd_sts.features.teachers.dto.TeacherEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.*;
 
 @Entity
-@Table(name = "users") // 1. Змінили ім'я таблиці, щоб не конфліктувало з SQL
+@Table(name = "users")
 @Getter
 @Setter
-@Builder // 2. Дуже зручно для створення об'єктів
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
@@ -43,9 +47,15 @@ public class UserEntity {
         this.createdAt = new Date();
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, orphanRemoval = true)
     @ToString.Exclude
+    @JsonManagedReference
     private UserPersonalDataEntity personalData;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, orphanRemoval = true)
+    @ToString.Exclude
+    @JsonManagedReference
+    private TeacherEntity teacherData;
 
 
     public void setPersonalData(UserPersonalDataEntity data) {
